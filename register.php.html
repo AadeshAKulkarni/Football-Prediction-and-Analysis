@@ -1,0 +1,49 @@
+<html>
+<body>
+<?php
+// login_page info stored in here
+echo "YEs!!!";
+$username=$_POST["UserName"];
+$emailid=$_POST["Email"];
+
+// DB Connection details stored in here
+
+$dbserver='localhost';
+$dbuser='root';
+$dbpass='';
+$db='footballstats';
+
+// Create connection
+$link=mysqli_connect($dbserver,$dbuser,$dbpass,$db);
+
+// Check connection
+if (!$link) {
+    die('Connect Error: ' . mysqli_connect_error());
+}
+$sql1 ="select * from users where email='$emailid';";
+$res1 = mysqli_query($link, $sql1);;
+$count1=mysqli_num_rows($res1);
+
+if($count1==0)
+{
+	$sql2 ="select * from users where username='$username';";
+	$res2 = mysqli_query($link, $sql2);;
+	$count2=mysqli_num_rows($res2);
+
+	if($count2==0)
+	{
+		echo "Validation Complete";
+	}	
+	else
+		echo "Username already exists.";
+}
+else
+	echo "Email already Exists.";
+
+
+// Close Connection at the end of the file
+mysqli_close($link);
+
+?>
+</body>
+</html>
