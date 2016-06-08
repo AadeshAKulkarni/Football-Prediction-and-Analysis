@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<?php
+session_start();
+// DB Connection details stored in here
+$dbserver='localhost';
+$dbuser='root';
+$dbpass='';
+$db='footballstats';
+
+// Create connection
+$link=mysqli_connect($dbserver,$dbuser,$dbpass,$db);
+
+// Check connection
+if (!$link) {
+    die('Connect Error: ' . mysqli_connect_error());
+}
+$sql1 ="select HOME_TEAM,AWAY_TEAM, HomeLogo, AwayLogo, DATE, TIME from fix";
+$res1 = mysqli_query($link, $sql1);
+$count1=mysqli_num_rows($res1);
+$HomeTeam=array();
+$AwayTeam=array();
+$HomeLogo=array();
+$AwayLogo=array();
+$Date=array();
+$Time = array();
+$homepred=array();
+$awaypred=array();
+
+for($x=0;($x<16)&&($row=mysqli_fetch_assoc($res1));$x++)
+{
+	$HomeTeam[$x]=$row["HOME_TEAM"];
+	$AwayTeam[$x]=$row["AWAY_TEAM"];
+	$HomeLogo[$x]=$row["HomeLogo"];
+	$AwayLogo[$x]=$row["AwayLogo"];
+	$Date[$x] = $row["DATE"];
+	$Time[$x] = $row["TIME"];		
+	//$HomeTeam[$x]=$row["HOME_TEAM"];
+}
+$sql2 ="select homepred,awaypred from pred;";
+$res2 = mysqli_query($link, $sql2);
+$count2=mysqli_num_rows($res2);
+
+for($x=0;($x<16)&&($row=mysqli_fetch_assoc($res2));$x++)
+{
+	$homepred[$x]=$row["homepred"];
+	$awaypred[$x]=$row["awaypred"];
+}
+$_SESSION['team1']=$HomeTeam[0];
+$_SESSION['team2']=$AwayTeam[0];
+$_SESSION['date']=$Date[0];
+$_SESSION['time']=$Time[0];
+$_SESSION['homelogo']=$HomeLogo[0];
+$_SESSION['awaylogo']=$AwayLogo[0];
+?>
+<html lang="en">
+
+<!-- Mirrored from www.mirrorcricket11.com/TournamentHome/Home by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:58:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+ 
+    <title>Tournament Schedule - FootPred</title>
+    <meta name="description" content="Schedule for the daily matches between different teams with date and time. Create your own team and game to WIN prizes daily.">
+    <meta name="author" content="">
+
+    <link href="../favicon.html" rel="shortcut icon" type="image/x-icon" />
+    
+    <link href="../Content/css/bootstrap.css" rel="stylesheet"/>
+<link href="../Content/css/font-awesome.css" rel="stylesheet"/>
+<link href="../Content/css/style.css" rel="stylesheet"/>
+<link href="../Content/css/mCustomScrollbar.css" rel="stylesheet"/>
+<link href="../Content/css/animate.css" rel="stylesheet"/>
+
+    <script src="../Scripts/modernizr-2.5.3.js"></script>
+
+    <script src="../Scripts/jquery-1.11.0.js"></script>
+
+    <script src="../Scripts/jquery-migrate-1.2.1.js"></script>
+
+    <script src="../Scripts/jquery.mCustomScrollbar.concat.js"></script>
+<script src="../Scripts/bootstrap.js"></script>
+<script src="../Scripts/wow.js"></script>
+<script src="../Scripts/bootstrap-tabcollapse.js"></script>
+<script src="../Scripts/jquery.common.js"></script>
+<script src="../Scripts/custom.js"></script>
+<script src="../Scripts/slick.js"></script>
+
+    <script src="../Scripts/jquery.backstretch.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '../../www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-58885551-1', 'auto');
+        ga('send', 'pageview');
+
+</script>
+
+</head>
+<body>
+    <!--[Header]-->
+    <header class="clearfix header">
+<div class="container">
+	<div class="top-link pull-right">
+    	 
+    
+          <div class="top-log-reg">
+   <a href="../usermember/login.html" class="reg-btn">Login<i class="fa fa-angle-double-right"></i></a>
+      <a href="../usermember/register.php" class="reg-btn">Register Now <i class="fa fa-angle-double-right"></i></a>
+               </div>
+      
+    </div>
+	<div class="logos pull-left">
+    <a href="../index.html" class="miror-logo" title="">
+    <img src="../images/FP.png"   alt="FP" /></a>  
+    <div class="logo">
+      </div>
+  </div>
+</div>
+<nav id="nav" class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>                
+            </div>
+            
+             
+    <a href="../UserMember/login.php" class="team-btn">
+        Start Predicting </a>
+
+  
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">            		
+                <ul class="nav navbar-nav" id="ulnavigation">
+                <li><a href="/footpred/index.html" class="">Home</a></li>
+                	<li><a href="Home1.php" class="active">Schedule</a></li>
+                 
+ <li><a href="../howtoplay/knowmore.html" class="">How to play</a></li>
+                                   
+                 <li><a href="../leaderboard/index.html" class="">LeaderBoard</a></li>
+                 <li><a href="/footpred/about.html" class="">About Us</a></li>                            
+                </ul>
+
+            </div>
+            
+        </div>
+    </nav>
+</header>
+    <!--[/Header]-->
+    <!--Body-->
+    
+    
+<div class="heading">
+    <h1 class="heading-1">
+        PREMIER LEAGUE FIXTUREs</h1>
+</div>
+<!--[middle section]-->
+<div class="container">
+    <!--tournaments -->
+    <div class="tournaments">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <thead>
+                <tr>
+                    <th width="14%" align="center" valign="middle">
+                        Matches
+                    </th>
+                    <th width="72%" align="center" valign="middle">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th width="60%" align="center" valign="middle">
+                                    Teams
+                                </th>
+                               
+                                <th width="20%" align="center" valign="middle">
+                                    Date
+                                </th>
+                                <th width="20%" align="center" valign="middle">
+                                    FP Prediction 
+                                </th>
+                            </tr>
+                        </table>
+                    </th>
+                    <th width="14%" align="center" valign="middle">Bet</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td align="center" valign="middle"> Match 1
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                  <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                               <img src="<?php echo $HomeLogo[0];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[0];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[0];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[0];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                    </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[0]; ?></td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[0])." - ".round($awaypred[0]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                         <a href="../TournamentHome/prediction.php">Perform Prediction</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"> Match 2 </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[1];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[1];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[1];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[1];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[1]; ?> </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[1])." - ".round($awaypred[1]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[2];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[2];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[2];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[2];?></figcaption>
+                            </figure>
+                          </div>
+                    
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[0]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[2])." - ".round($awaypred[2]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Prediction unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 3
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                         <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[3];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[3];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[3];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[3];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[3]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[3])." - ".round($awaypred[3]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 4
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[4];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[4];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[4];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[4];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[4]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[4])." - ".round($awaypred[4]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                         <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[5];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[5];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[5];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[5];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[5]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[5])." - ".round($awaypred[5]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 5
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                         <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[6];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[6];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[6];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[6];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[6]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[6])." - ".round($awaypred[6]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 6
+                        </td>
+                        <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                         <div class="team-b">
+                            <figure class="team">
+                            <img src="<?php echo $HomeLogo[7];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[7];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[7];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[7];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[7]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[7])." - ".round($awaypred[7]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[8];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[8];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[8];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[8];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[8]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[8])." - ".round($awaypred[8]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 7
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[9];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[9];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[9];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[9];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[9]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[9])." - ".round($awaypred[9]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 8
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                       <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[10];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[10];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[10];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[10];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[10]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[10])." - ".round($awaypred[10]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 9 </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                         <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[11];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[11];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[11];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[11];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[11]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[11])." - ".round($awaypred[11]); ?></strong></td>
+                                    </tbody>
+                                      
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                      <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[12];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[12];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[12];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[12];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[12]; ?><strong></strong>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[12])." - ".round($awaypred[12]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle">Daily Match 10
+                        </td>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                            <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[13];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[13];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[13];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[13];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[13]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%">
+                                            <strong><?php echo round($homepred[13])." - ".round($awaypred[13]); ?></strong>
+                                        </td>
+                                    </tbody>
+                                </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                             <img src="<?php echo $HomeLogo[14];?>" alt="">
+                              <figcaption><?php echo $HomeTeam[14];?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $AwayLogo[14];?>" alt="">
+                              <figcaption><?php echo $AwayTeam[14];?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                        </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $Date[14]; ?>
+                                        </td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo round($homepred[14])." - ".round($awaypred[14]); ?></strong></td>
+                                    </tbody>
+                                </table>
+                        </td>
+                        <td align="center" valign="middle">
+                       
+                           <span>Team formation unavailable</span> 
+                        </td>
+                    </tr>
+                    
+               
+            </tbody>
+        </table>
+    </div>
+    <!--/tournaments -->
+</div>
+<!--[/middle section]-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.backstretch("../images/stad4.png");
+    });
+</script>
+
+    <!--//Body-->
+    <!--[Footer]-->
+    <footer class="footer">
+	<div class="container">
+  	<div class="pull-left">
+  	<ul>
+    	<li><a href="../index.html">Home</a></li>
+     
+      <li><a href="../terms.html">Terms and Conditions</a></li>
+      <li><a href="../privacypolicy.html">Privacy Policy</a></li>
+      <li><a href="../Contactus/Contact.html">Contact Us</a></li>
+    </ul>
+    <p>Copyright © 2016-2017A-Team. All rights reserved.</p>
+    </div>
+       <div class="download-app pull-right" style="display:none;">
+    	<h4>Download App</h4>
+    	<a href="#" title="Download For Andoriod"><img src="../images/andoriod-app.png" alt="Download Andoriod App"></a>
+      <a href="#" title="Download on the App Store"><img src="../images/iphone-app.png" alt="Download iPhone App"></a>
+      
+    </div>
+  	  </div>
+</footer>
+    <!--[/Footer]-->
+    <!--[Popup]-->
+   
+        
+    <script type="text/javascript">
+       
+        function getvalidate() {
+       
+            console.log($('#CityName').val());
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+           
+             $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+               
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+               
+                var url = '../UserMember/ChooseCity.html';
+              
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = '../usermember/Index.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+//             alert("Please enter username and select city name");
+                return false;
+            }
+
+
+        };
+        $("#CityName").change(function () {
+
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+                $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+//               alert('http://www.mirrorcricket11.com/'); 
+                var url = "../UserMember/ChooseCity.html";
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = '../usermember/register.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+                return false;
+            }
+
+        });
+//        $(document).ready(function () {
+//            $("#hdnSession").val();
+//            if( parseInt($("#hdnSession").val())==0){
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//                    
+//            }
+//            if(parseInt($("#hdnSession").val())==1){
+
+//            }else{
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//            }
+//        }
+//        );
+    </script>
+    <!--[/Popup]-->
+    
+    <input type="hidden" id="hdnSession" value="0" />
+</body>
+
+<!-- Mirrored from www.mirrorcricket11.com/TournamentHome/Home by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:58:13 GMT -->
+</html>

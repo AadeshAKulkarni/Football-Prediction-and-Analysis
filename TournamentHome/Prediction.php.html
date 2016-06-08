@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<?php
+session_start();
+$hometeam=$_SESSION['team1'];
+$awayteam=$_SESSION['team2'];
+// DB Connection details stored in here
+
+$dbserver='localhost';
+$dbuser='root';
+$dbpass='';
+$db='footballstats';
+
+// DB Connection code taken from php.net
+$link = mysqli_connect($dbserver,$dbuser,$dbpass,$db);
+if (!$link) {
+    echo "Error: Unable to connect to MySQL." . PHP_EOL;
+    echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+    exit;
+}
+//echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 1 - The Current rank of the home team. 
+
+// S1: SELECT COUNT(*) QUERY
+$q2="select rank from currentrank where Team='$hometeam';";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r1=$res2['rank'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 2 - The Current rank of the Away team. 
+
+// S1: SELECT COUNT(*) QUERY
+$q2="select rank from currentrank where Team='$awayteam';";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r2=$res2['rank'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 3 - The number of win games of the home team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$hometeam')OR(AwayTeam='$hometeam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	//echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$hometeam' AND FTR='H')OR(AwayTeam='$hometeam' AND FTR='A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r3=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 4 - The number of draw games of the home team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$hometeam')OR(AwayTeam='$hometeam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	//echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$hometeam' AND FTR='D')OR(AwayTeam='$hometeam' AND FTR='D');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r4=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 5 - The number of loss games of the home team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$hometeam')OR(AwayTeam='$hometeam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+//echo "<br>Dropped!! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$hometeam' AND FTR='L')OR(AwayTeam='$hometeam' AND FTR='L');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r5=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 6 - The number of win games of the away team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$awayteam')OR(AwayTeam='$awayteam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+//echo "<br>Dropped!! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$awayteam' AND FTR='H')OR(AwayTeam='$awayteam' AND FTR='A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r6=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 7 - The number of draw games of the away team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$awayteam')OR(AwayTeam='$awayteam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+//echo "<br>Dropped!! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$awayteam' AND FTR='D')OR(AwayTeam='$awayteam' AND FTR='D');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r7=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 8 - The number of lose games of the away team during the last five rounds. 
+// S1: CREATE VIEW
+$q1="create view v1 as select HomeTeam,AwayTeam,FTR from seasons1 where (HomeTeam='$awayteam')OR(AwayTeam='$awayteam') order by `Div` desc limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	//echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from v1 where (HomeTeam='$awayteam' AND FTR='L')OR(AwayTeam='$awayteam' AND FTR='L');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r8=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view v1;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$r9=$r3*3+$r4;
+$r10=$r6*3+$r7;
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 11 - The number of win games of the home team during the last five home rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (HomeTeam = '$hometeam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	//echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (HomeTeam = '$hometeam' AND FTR = 'H');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r11=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 12 - The number of draw games of the home team during the last five home rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (HomeTeam = '$hometeam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (HomeTeam = '$hometeam' AND FTR = 'D');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r12=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 13 - The number of lose games of the home team during the last five home rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (HomeTeam = '$hometeam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (HomeTeam='$hometeam' AND FTR='A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r13=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 14 - The number of win games of the away team during the last five Away rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (AwayTeam = '$awayteam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (AwayTeam = '$awayteam' AND FTR = 'A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r14=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 15 - The number of draw games of the away team during the last five home rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (AwayTeam = '$awayteam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (AwayTeam = '$awayteam' AND FTR = 'D');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r15=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 16 - The number of lose games of the away team during the last five home rounds. 
+// S1: CREATE VIEW
+$q1="create view Temp12 as select * from seasons1 where (AwayTeam = '$awayteam') order by `Div` DESC limit 5;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp12 where (AwayTeam = '$awayteam' AND FTR = 'H');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r16=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp12;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//	echo "<br>Dropped!! Yay!"."<br>";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 17 - Avg goals scored by the home team:
+// S1: CREATE VIEW
+// S2: SELECT COUNT(*) QUERY
+$q2="select AVG(FTHG) from seasons1 where (HomeTeam = '$hometeam')OR(AwayTeam='$hometeam');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r17=$res2['AVG(FTHG)']."<br>";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 18 - Avg goals conceded by the home team:
+// S1: CREATE VIEW
+// S2: SELECT COUNT(*) QUERY
+$q2="select AVG(FTAG) from seasons1 where (HomeTeam = '$hometeam')OR(AwayTeam='$hometeam');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r18=$res2['AVG(FTAG)']."<br>";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 19 - Avg goals scored by the away team:
+// S1: CREATE VIEW
+// S2: SELECT COUNT(*) QUERY
+$q2="select AVG(FTHG) from seasons1 where (HomeTeam = '$awayteam')OR(AwayTeam='$awayteam');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r19=$res2['AVG(FTHG)']."<br>";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 20 - Avg goals conceded by the away team:
+// S1: CREATE VIEW
+// S2: SELECT COUNT(*) QUERY
+$q2="select AVG(FTAG) from seasons1 where (HomeTeam = '$awayteam')OR(AwayTeam='$awayteam');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r20=$res2['AVG(FTAG)']."<br>";
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 21 - The Current rank of the home team. 
+
+// S1: SELECT COUNT(*) QUERY
+$q2="select rank from previousrank where Team='$hometeam';";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r21=$res2['rank'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 22 - The Current rank of the Away team. 
+
+// S1: SELECT COUNT(*) QUERY
+$q2="select rank from previousrank where Team='$awayteam';";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r22=$res2['rank'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 23 - Historical data.  HOME TEAM
+
+// S1: SELECT COUNT(*) QUERY
+$q2="SELECT count(*) FROM `seasons1` WHERE (AwayTeam = '$hometeam' AND HomeTeam = '$awayteam' AND FTR = 'A') OR (AwayTeam = '$awayteam' AND HomeTeam = '$hometeam' AND FTR = 'H')";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r23=$res2['count(*)'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 24 - Historical data. AWAY TEAM
+
+// S1: SELECT COUNT(*) QUERY
+$q2="SELECT count(*) FROM `seasons1` WHERE (AwayTeam = '$awayteam' AND HomeTeam = '$hometeam' AND FTR = 'A') OR (AwayTeam = '$hometeam' AND HomeTeam = '$awayteam' AND FTR = 'H')";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r24=$res2['count(*)'];
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 25 - CURRENT FORM HOME TEAM
+// S1: CREATE VIEW
+$q1="create view Temp as select * from seasons1 where HomeTeam = '$hometeam' OR AwayTeam = '$hometeam' order by `Div` DESC limit 10;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp where (HomeTeam = '$hometeam' AND FTR = 'H') OR (AwayTeam = '$hometeam' AND FTR = 'A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r25=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 26 - CURRENT FORM AWAY TEAM
+// S1: CREATE VIEW
+$q1="create view Temp as select * from seasons1 where HomeTeam = '$awayteam' OR AwayTeam = '$awayteam' order by `Div` DESC limit 10;";
+$q1_executed=mysqli_query($link,$q1);
+if($q1_executed)
+	////echo "Created! Yay!";
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select count(*) from Temp where (HomeTeam = '$awayteam' AND FTR = 'H') OR (AwayTeam = '$awayteam' AND FTR = 'A');";
+$q2_executed=mysqli_query($link,$q2);
+$res2=mysqli_fetch_assoc($q2_executed);
+$r26=$res2['count(*)'];
+
+// S3: DROP VIEW 
+$q3="drop view Temp;";
+$q3_executed=mysqli_query($link,$q3);
+if($q3_executed)
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 27 - BCR
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select score from bcr where (HomeTeam = '$hometeam')";
+$q2_executed=mysqli_query($link,$q2);
+//$res2=mysqli_fetch_assoc($q2_executed);
+$r27=$q2_executed;
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+// FEATURE NUMBER 28 - BCR
+
+// S2: SELECT COUNT(*) QUERY
+$q2="select score from bcr where (AwayTeam = '$awayteam')";
+$q2_executed=mysqli_query($link,$q2);
+//$res2=mysqli_fetch_assoc($q2_executed);
+$r28=$q2_executed;
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+$team1_odd=(20-$r1)*3+$r3*10+$r4*5-$r5*10+$r9+$r11*20+$r12*7-$r13+$r17*10-$r18*10+(20-$r21)*2+$r23*10+$r25*5+$r27*3;
+$team2_odd=(20-$r2)*3+$r6*10+$r7*5-$r8*10+$r10+$r14*20+$r15*7-$r16+$r19*10-$r20*10+(20-$r22)*2+$r24*10+$r26*5+$r28*3;
+
+
+function gcd($a,$b) {
+    $a = abs($a); $b = abs($b);
+    if( $a < $b) list($b,$a) = Array($a,$b);
+    if( $b == 0) return $a;
+    $r = $a % $b;
+    while($r > 0) {
+        $a = $b;
+        $b = $r;
+        $r = $a % $b;
+    }
+    return $b;
+}
+function simplify($num,$den) {
+    $g = gcd($num,$den);
+    return Array($num/$g,$den/$g);
+}
+$odd1=simplify($team1_odd,$team2_odd)[0];
+$odd2=simplify($team1_odd,$team2_odd)[1];
+
+$_SESSION['hodd']=$odd2/$odd1;
+$_SESSION['aodd']=$odd1/$odd2;
+$_SESSION['hteam']=$hometeam;
+
+?>
+<html lang="en">
+
+<!-- Mirrored from www.mirrorcricket11.com/usermember/login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:57:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+ 
+    <title>Register or Login to League - Mirror Cricket11 Fantasy Games </title>
+    <meta name="description" content="Register to start your fantasy cricket league game on Mirror Cricket11, an initiative by Mumbai Mirror.">
+    <meta name="author" content="">
+
+    <link href="../favicon.html" rel="shortcut icon" type="image/x-icon" />
+    
+    <link href="../Content/css/bootstrap.css" rel="stylesheet"/>
+<link href="../Content/css/font-awesome.css" rel="stylesheet"/>
+<link href="../Content/css/style.css" rel="stylesheet"/>
+<link href="../Content/css/mCustomScrollbar.css" rel="stylesheet"/>
+<link href="../Content/css/animate.css" rel="stylesheet"/>
+
+    <script src="../Scripts/modernizr-2.5.3.js"></script>
+
+    <script src="../Scripts/jquery-1.11.0.js"></script>
+
+    <script src="../Scripts/jquery-migrate-1.2.1.js"></script>
+
+    <script src="../Scripts/jquery.mCustomScrollbar.concat.js"></script>
+<script src="../Scripts/bootstrap.js"></script>
+<script src="../Scripts/wow.js"></script>
+<script src="../Scripts/bootstrap-tabcollapse.js"></script>
+<script src="../Scripts/jquery.common.js"></script>
+<script src="../Scripts/custom.js"></script>
+<script src="../Scripts/slick.js"></script>
+
+    <script src="../Scripts/jquery.backstretch.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '../../www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-58885551-1', 'auto');
+        ga('send', 'pageview');
+
+</script>
+
+</head>
+<body>
+    <!--[Header]-->
+    <header class="clearfix header">
+<div class="container">
+	<div class="top-link pull-right">
+    	 
+    
+          <div class="top-log-reg">
+        
+		
+		Welcome, <?php echo $_SESSION['username'];?>
+						
+      </div>
+      
+    </div>
+	<div class="logos pull-left">
+    <a href="/footpred/Index.html" class="miror-logo" title="">
+    <img src="../images/FP.png"   /></a>  
+    <div class="logo">
+      </div>
+  </div>
+</div>
+<nav id="nav" class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>                
+            </div>
+            
+             
+    <a href="/footpred/index.html" class="team-btn">
+        Log-Out</a>
+
+  <div class="modal fade" id="myModal_ComingDate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <button type="button" class="close" data-dismiss="modal" id="btnclose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+              
+                    <div class="form-sec register col-sm-12">
+                        <div class="form-group">
+                          We will open the team and league creation feature on 8th of Feb 2015. We will notify you by email as well or you can come back on 6th feb. Till then put your thinking cap and start building your game plan.
+                        </div>
+                      
+                    </div>
+               
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">            		
+                <ul class="nav navbar-nav" id="ulnavigation">
+                	<li><a href="../TournamentHome/Home.html" class="">Schedule</a></li>
+                    <li><a href="../TournamentHome/stats.html" class="">Statistics</a></li>
+ <li><a href="../howtoplay.html" class="">How to play</a></li>
+                   
+                 <li><a href="../leaderboard/index.html" class="">LeaderBoard</a></li>           
+                </ul>
+
+            </div>
+            
+        </div>
+    </nav>
+</header>
+    <!--[/Header]-->
+    <!--Body-->
+    
+    
+<script>
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        //console.log('statusChangeCallback');
+        //console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            console.log('connected');
+            if (!window.location.origin) {
+                window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            }
+
+            //and here we will get object of address
+            var urls = (window.location != window.parent.location) ? document.referrer : document.location;
+            //Martins adviced fix for checking if You are not in iFrame    
+            if (window.top === window) {
+                urls = urls.origin;
+            }
+            testAPI();
+         
+        } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            //document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
+            //FBLogin();
+            if (!window.location.origin) {
+                window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            }
+
+            //and here we will get object of address
+            var urls = (window.location != window.parent.location) ? document.referrer : document.location;
+
+            //Martins adviced fix for checking if You are not in iFrame    
+            if (window.top === window) {
+                urls = urls.origin;
+            }
+            FBLogin();
+       
+
+
+
+        } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            //document.getElementById('status').innerHTML = 'Please log ' +'into Facebook.';
+            if (!window.location.origin) {
+                window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            }
+
+            //and here we will get object of address
+            var urls = (window.location != window.parent.location) ? document.referrer : document.location;
+
+            //Martins adviced fix for checking if You are not in iFrame    
+            if (window.top === window) {
+                urls = urls.origin;
+            }
+            
+            FBLogin();
+           
+
+        }
+    }
+    function FBLogin() {
+        FB.login(function (response) {
+            if (response.authResponse) {
+                checkLoginState();
+                //ConnectFacebookUser(response.authResponse.accessToken);
+            } else {
+            }
+        }, { scope: 'email,public_profile' });
+    }
+    // This function is called when someone finishes with the Login
+    // Button.  See the onlogin handler attached to it in the sample
+    // code below.
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: 481055982086771,
+            cookie: true,  // enable cookies to allow the server to access 
+            // the session
+            xfbml: true,  // parse social plugins on this page
+            version: 'v2.0' // use version 2.0
+        });
+        //FB.Canvas.setAutoResize(true);
+        //FB.Canvas.setSize({ width: 1024, height: 1500 });
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+
+//        FB.getLoginStatus(function (response) {
+//            statusChangeCallback(response);
+//        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "../../connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
+        //checkLoginState();
+        console.log('Welcome!  Fetching your information.... ');
+        var url = '/me?fields=name,email,first_name,last_name';
+        FB.api(url, function (response) {
+            console.log('Successful login for: ' + response.name);
+            console.log(JSON.stringify(response));
+            //document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.first_name + response.last_name + response.email + '!';
+            var form = document.createElement("form");
+            form.setAttribute("method", 'post');
+            form.setAttribute("action", 'http://mirrorcricket11.com?aspxerrorpath=/UserMember/facebookpost');
+            var id = document.createElement("input");
+            id.setAttribute("type", "hidden");
+            id.setAttribute("name", 'id');
+            id.setAttribute("value", response.id);
+            form.appendChild(id);
+            var first_name = document.createElement("input");
+            first_name.setAttribute("type", "hidden");
+            first_name.setAttribute("name", 'first_name');
+            first_name.setAttribute("value", response.first_name);
+            form.appendChild(first_name);
+            var last_name = document.createElement("input");
+            last_name.setAttribute("type", "hidden");
+            last_name.setAttribute("name", 'last_name');
+            last_name.setAttribute("value", response.last_name);
+            form.appendChild(last_name);
+            var email = document.createElement("input");
+            email.setAttribute("type", "hidden");
+            email.setAttribute("name", 'email');
+//            alert(response.email);
+            email.setAttribute("value", response.email);
+            form.appendChild(email);
+            document.body.appendChild(form);
+            console.log('FB Email Id :' + response.email);
+            form.submit();
+        });
+    }
+   
+        </script>
+
+
+ <script type="text/javascript" language="javascript">
+
+
+        function OpenGoogleLoginPopup() { 
+       // alert('http://www.mirrorcricket11.com/Gmail/LoginWithGoogle1');  
+            var url = "https://accounts.google.com/o/oauth2/auth?";
+            url += "scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&";
+            url += "state=%2Fprofile&";
+            url += "redirect_uri=http://www.mirrorcricket11.com/Gmail/LoginWithGoogle1";
+            url += "&response_type=token&";
+            url += "client_id=236066517289-99rdtcefjf7p0gsvd1bvmjg3tip6qr7i.apps.googleusercontent.com";
+            //alert(url);
+//console.log(url);
+            window.location = url;
+        }
+    </script>
+<script type="text/javascript" language="javascript">
+    //    function GetGmailLogin() {
+    //       // alert("get gmail login");
+    //        var url = "/UserMember/Login";
+    ////        $.ajax({
+    ////            type: "POST",
+    ////            url:url,
+    ////            data: {id:"2"},
+    ////            success:function(data) {
+
+    ////            }
+
+    //        //        });
+    //        window.location = "/UserMember/GmailLogin";
+    //    }
+    function GetFacebookLogin() {
+        // alert("get gmail login");
+        var url = "https://graph.facebook.com/oauth/authorize?client_id=481055982086771&amp;redirect_uri=http%3a%2f%2fwww.mirrorcricket11.com%2fusermember%2ffblogin&amp;scope=user_photos,email";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { id: "2" },
+            success: function (data) {
+
+            }
+
+        });
+    }
+</script>
+
+<div class="heading"> <h1 class="container">PREDICTION</h1></div>
+
+<!--[middle section]-->
+<div class="container">
+    <!--[register-now]-->
+    
+    <div class="tournaments">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <thead>
+                <tr id="tabh">
+                   <th width="72%" align="center" valign="middle" bgcolor="#F0F0F0">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th width="60%" align="center" valign="middle">
+                                    Teams
+                                </th>
+                               
+                                <th width="20%" align="center" valign="middle">DATE</th>
+                                <th width="20%" align="center" valign="middle">
+                                    TIME                                </th>
+                            </tr>
+                        </table>
+                  </th>
+                    <th width="14%" align="center" valign="middle">ODDS</th>
+            </tr>
+        </thead>
+            <tbody>
+        <tr>
+                        <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                  <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        <div class="team-b">
+                            <figure class="team">
+                               <img src="<?php echo $_SESSION['homelogo']?>" alt="">
+                              <figcaption><?php echo $_SESSION['team1']?></figcaption>
+                            </figure>
+                            <span class="vs">VS</span>
+                            <figure class="team">
+                              <img src="<?php echo $_SESSION['awaylogo']?>" alt="">
+                              <figcaption><?php echo $_SESSION['team2']?></figcaption>
+                            </figure>
+                          </div>
+                      </article>
+                                    </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"><?php echo $_SESSION['date']?></td>
+                                        <td align="center" valign="middle" width="20%"><strong><?php echo $_SESSION['time']?></strong></td>
+                                    </tbody>
+                                </table>
+            </td>
+            <td align="center" valign="middle" nowrap="nowrap" bgcolor="#000066"><strong><?php echo round($odd2);?>:<?php echo round($odd1);?></strong>
+            </td>
+          </tr>
+                    </tbody>
+      </table>
+  </div>
+  <div class="register-now login">  
+      <h2 class="heading-2 text-center"><span>Make your Prediction</span></h2>
+        
+        <div class="clearfix">
+            <!--[left-section]-->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                  <td align="center" valign="middle" width="60%">
+                                            <article class="tournaments-details clearfix">
+                        
+                            <figure class="team">
+                               <img src="<?php echo $_SESSION['homelogo']?>" alt="">
+                              <figcaption><?php echo $_SESSION['team1']?></figcaption>
+                            </figure                            
+                            ><figure class="team">
+                              <img src="<?php echo $_SESSION['awaylogo']?>" alt="">
+                              <figcaption><?php echo $_SESSION['team2']?></figcaption>
+                            </figure>
+                          
+                      </article>
+                                    </td>
+                                       
+                                        <td align="center" valign="middle" width="20%"></td>
+                                        <td align="center" valign="middle" width="20%"><strong></strong></td>
+                                    </tbody>
+          </table>
+		  
+		  
+          <div class="col-md-6 col-sm-7 col-xs-12 form-sec-1">                    
+<div class="form-group">
+               PLACE YOUR BET:
+			   <form method="POST">
+               <input name="submit" type="submit" id="100" autofocus class="btn submit" value="100" class="abcd"/>
+                  <input name="submit"  type="submit" id="500" autofocus class="btn submit" value="500" class="abcd" />
+                  <input name="submit"  type="submit" autofocus class="btn submit" id="1000" value="1000" class="abcd"/>                
+</form> 
+<?php
+if(isset($_POST['submit'])) 
+{
+  $_SESSION['amt']=$_POST['submit'];
+  //echo $_SESSION['amt'];
+}
+?>                          
+</div>
+</div>
+<div class="col-md-6 col-sm-7 col-xs-12">                                  
+            <!--[/left-section]--                    
+
+    <!--[/register-now]-->
+    <form action ="betting.php" method="POST">
+    <strong>ODDS TABLE: </strong>
+    <table border="1" align="center" cellpadding="0" cellspacing="10" class="table-hover">    
+ <tr>
+ <th width="60%" align="center" valign="middle">Team Name: </th><th width="10%" align="center" valign="middle">100$</th><th width="10%" align="center" valign="middle">500$</th><th width="10%" align="center" valign="middle">1000$</th>
+ </tr>
+ <tr>
+ <td><?php echo $_SESSION['team1']?>: </td>
+<td><?php echo round(($odd2/$odd1)*100);?> </td>
+ <td><?php echo round(($odd2/$odd1)*500);?></td><td><?php echo round(($odd2/$odd1)*1000);?></td>
+ </tr>
+ <tr>
+ <td><?php echo $_SESSION['team2']?>: </td><td><?php echo round(($odd1/$odd2)*100);?></td><td><?php echo round(($odd1/$odd2)*500);?></td><td><?php echo round(($odd1/$odd2)*1000);?></td>
+ </tr> 
+</table>
+</div>
+<div class="col-sm-4 col-xs-12 social-media col-sm-offset-1">
+<table width="200" border="0">
+  <tr>
+    <td>Select Team:</td>
+    <td><select name="team">
+  <option>&lt;Select Team&gt;</option>
+  <option><?php echo $_SESSION['team1']?></option>
+  <option><?php echo $_SESSION['team2']?></option>
+</select></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input name="submit" type="submit" id="submit" value="Predict"></td>
+  </tr>
+</table>
+</form>
+</div>
+<?php
+function betting()
+{
+	$x="";
+}
+?>
+</div>
+</div> 
+</div>  
+<!--[/middle section]-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.backstretch("../images/stad4.png");
+    });
+</script>
+
+    <!--//Body-->
+    <!--[Footer]-->
+    <footer class="footer">
+	<div class="container">
+  	<div class="pull-left">
+  	<ul>
+    	<li><a href="../index.html">Home</a></li>
+     
+      <li><a href="../terms.html">Terms and Conditions</a></li>
+      <li><a href="../privacypolicy.html">Privacy Policy</a></li>
+      <li><a href="../Contactus/Contact.html">Contact Us</a></li>
+    </ul>
+    <p>Copyright © 2016-2017A-Team. All rights reserved.</p>
+    </div>
+       <div class="download-app pull-right" style="display:none;">
+    	<h4>Download App</h4>
+    	<a href="#" title="Download For Andoriod"><img src="../images/andoriod-app.png" alt="Download Andoriod App"></a>
+      <a href="#" title="Download on the App Store"><img src="../images/iphone-app.png" alt="Download iPhone App"></a>
+      
+    </div>
+  	  </div>
+</footer>
+    <!--[/Footer]-->
+    <!--[Popup]-->           
+ 
+    <script type="text/javascript">
+       
+        function getvalidate() {
+       
+            console.log($('#CityName').val());
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+           
+             $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+               
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+               
+                var url = 'ChooseCity.html';
+              
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = 'Index.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+//             alert("Please enter username and select city name");
+                return false;
+            }
+
+
+        };
+        $("#CityName").change(function () {
+
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+                $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+//               alert('http://www.mirrorcricket11.com/'); 
+                var url = "ChooseCity.html";
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = 'register.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+                return false;
+            }
+
+        });
+//        $(document).ready(function () {
+//            $("#hdnSession").val();
+//            if( parseInt($("#hdnSession").val())==0){
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//                    
+//            }
+//            if(parseInt($("#hdnSession").val())==1){
+
+//            }else{
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//            }
+//        }
+//        );
+    </script>
+    <!--[/Popup]-->
+    
+    <script src="../Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="../Scripts/jquery.validate.js"></script>
+<script src="../Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+    <input type="hidden" id="hdnSession" value="0" />
+</body>
+
+<!-- Mirrored from www.mirrorcricket11.com/usermember/login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:58:03 GMT -->
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<?php
+session_start();
+?>
+<html lang="en">
+
+<!-- Mirrored from www.mirrorcricket11.com/TournamentHome/Home by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:58:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+ 
+    <title>Statistics - FootPred</title>
+    <meta name="description" content="Schedule for the daily matches between different teams with date and time. Create your own team and game to WIN prizes daily.">
+    <meta name="author" content="">
+
+    <link href="../favicon.html" rel="shortcut icon" type="image/x-icon" />
+    
+    <link href="../Content/css/bootstrap.css" rel="stylesheet"/>
+<link href="../Content/css/font-awesome.css" rel="stylesheet"/>
+<link href="../Content/css/style.css" rel="stylesheet"/>
+<link href="../Content/css/mCustomScrollbar.css" rel="stylesheet"/>
+<link href="../Content/css/animate.css" rel="stylesheet"/>
+
+    <script src="../Scripts/modernizr-2.5.3.js"></script>
+
+    <script src="../Scripts/jquery-1.11.0.js"></script>
+
+    <script src="../Scripts/jquery-migrate-1.2.1.js"></script>
+
+    <script src="../Scripts/jquery.mCustomScrollbar.concat.js"></script>
+<script src="../Scripts/bootstrap.js"></script>
+<script src="../Scripts/wow.js"></script>
+<script src="../Scripts/bootstrap-tabcollapse.js"></script>
+<script src="../Scripts/jquery.common.js"></script>
+<script src="../Scripts/custom.js"></script>
+<script src="../Scripts/slick.js"></script>
+
+    <script src="../Scripts/jquery.backstretch.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '../../www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-58885551-1', 'auto');
+        ga('send', 'pageview');
+
+</script>
+
+</head>
+<body>
+    <!--[Header]-->
+    <header class="clearfix header">
+<div class="container">
+	<div class="top-link pull-right">
+    	 
+    
+          <div class="top-log-reg">
+         Welcome, <?php echo $_SESSION['username'];		 
+      ?>
+      </div>
+      
+    </div>
+	<div class="logos pull-left">
+    <a href="../index.html" class="miror-logo" title="">
+    <img src="../images/FP.png"   alt="FP" /></a>  
+    <div class="logo">
+      </div>
+  </div>
+</div>
+<nav id="nav" class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>                
+            </div>
+            
+             
+    <a href="/footpred/index.html" class="team-btn">
+        Log-Out </a>
+
+  
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">            		
+                <ul class="nav navbar-nav" id="ulnavigation">
+                	<li><a href="/footpred/TournamentHome/Home.php" class="">Schedule</a></li>
+  <li><a href="stats.html" class="active">Statistics</a></li>                  
+ <li><a href="../howtoplay/knowmore.html" class="">How to play</a></li>
+                 
+
+
+                  
+                 <li><a href="../leaderboard/index.php" class="">LeaderBoard</a></li>                        
+              </ul>
+
+            </div>
+            
+        </div>
+    </nav>
+</header>
+    <!--[/Header]-->
+    <!--Body-->
+    
+    
+<div class="heading">
+  <h1 class="heading-1">
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PREMIER LEAGUE STATISTICS</h1>
+</div>
+<!--[middle section]-->
+<div class="container">
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Te&#47;TeamPointsCharts&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='TeamPointsCharts&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Te&#47;TeamPointsCharts&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+    <!--tournaments -->
+   <script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fo&#47;Football_26&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Football_26&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fo&#47;Football_26&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+   
+   
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 2 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet2&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='ASTvsAT&#47;Sheet2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='ASTvsAT&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ru&#47;RunningSumofFthgvsMonths&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='RunningSumofFthgvsMonths&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ru&#47;RunningSumofFthgvsMonths&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 2 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;Firsthalfandsecondhalf&#47;Sheet2&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Firsthalfandsecondhalf&#47;Sheet2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fi&#47;Firsthalfandsecondhalf&#47;Sheet2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 3 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fu&#47;FullTimeAwayGoals&#47;Sheet3&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='FullTimeAwayGoals&#47;Sheet3' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fu&#47;FullTimeAwayGoals&#47;Sheet3&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 982px; height: 742px;'><noscript><a href='#'><img alt='Sheet 3 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet3&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='982' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='ASTvsAT&#47;Sheet3' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;AS&#47;ASTvsAT&#47;Sheet3&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showTabs' value='y' /></object></div>
+
+
+    
+    <!--/tournaments -->
+</div>
+<!--[/middle section]-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.backstretch("../images/stad4.png");
+    });
+</script>
+
+    <!--//Body-->
+    <!--[Footer]-->
+    <footer class="footer">
+	<div class="container">
+  	<div class="pull-left">
+  	<ul>
+    	<li><a href="../index.html">Home</a></li>          
+      <li><a href="../Contactus/Contact.html">Contact Us</a></li>
+    </ul>
+    <p>Copyright © 2016-2017A-Team. All rights reserved.</p>
+    </div>            
+    </div>
+  	  </div>
+</footer>
+    <!--[/Footer]-->
+    <!--[Popup]-->
+   
+        
+    <script type="text/javascript">
+       
+        function getvalidate() {
+       
+            console.log($('#CityName').val());
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+           
+             $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+               
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+               
+                var url = '../UserMember/ChooseCity.html';
+              
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = '../usermember/Index.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+//             alert("Please enter username and select city name");
+                return false;
+            }
+
+
+        };
+        $("#CityName").change(function () {
+
+            if ($('#CityName').val() == "Select City" || $('#CityName').val() == "") {
+                $('#CityName').addClass("input-validation-error");
+
+            }
+            else {
+                $('#CityName').removeClass("input-validation-error");
+            }
+            if ($('#CityName').val() != "" && $('#CityName').val() != "Select City") {
+              
+                var returntype = true;
+                var CityName = $('#CityName').val();
+//               alert('http://www.mirrorcricket11.com/'); 
+                var url = "../UserMember/ChooseCity.html";
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: { CityName: CityName },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.href = '../usermember/register.html';
+                        }
+                    }
+                });
+
+                return returntype;
+
+            }
+            else {
+                return false;
+            }
+
+        });
+//        $(document).ready(function () {
+//            $("#hdnSession").val();
+//            if( parseInt($("#hdnSession").val())==0){
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//                    
+//            }
+//            if(parseInt($("#hdnSession").val())==1){
+
+//            }else{
+//                window.location.href = 'http://www.mirrorcricket11.com/stage/index';
+//            }
+//        }
+//        );
+    </script>
+    <!--[/Popup]-->
+    
+    <input type="hidden" id="hdnSession" value="0" />
+</body>
+
+<!-- Mirrored from www.mirrorcricket11.com/TournamentHome/Home by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 14 Mar 2016 11:58:13 GMT -->
+</html>
